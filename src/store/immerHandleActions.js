@@ -4,7 +4,8 @@ const handleActions = (actionsMap, defaultState) => (state = defaultState, { typ
   produce(state, (draft) => {
     const resolvedType = typeof type === 'function' ? type.toString() : type;
     const action = actionsMap[resolvedType];
-    return action && action.call(null, draft, params);
+    // return action && action.call(null, draft, params);
+    return action && action(draft, params);
   });
 
 export default handleActions;

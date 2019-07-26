@@ -18,6 +18,7 @@ import {
   undo,
   redo,
   setFilter,
+  changeGradientColorStops,
 } from '../../store/canvas/actions';
 import { setPathColors } from '../../store/editor/actions';
 
@@ -25,14 +26,12 @@ import { selectActiveElement } from '../../store/editor/selectors';
 
 const Editor = ({
   setBG,
-  bgColor,
   addElement,
   elements,
   modifyElement,
   activeElId,
   setActiveElementId,
   setBgImage,
-  bgImageURL,
   deleteElement,
   activeElement,
   setEditingStatus,
@@ -45,6 +44,8 @@ const Editor = ({
   activeFilter,
   setPathColors,
   pathColors,
+  background,
+  changeGradientColorStops,
 }) => {
   useEffect(() => {
     (async () => {
@@ -137,18 +138,18 @@ const Editor = ({
           futureStatesExist={futureStatesExist}
         />
         <Tools
+          background={background}
           setBg={setBG}
-          bgColor={bgColor}
           addText={createTextEl}
           addRect={createRectangle}
           setBgImage={setBgImage}
           setFilter={setFilter}
           activeFilter={activeFilter}
           addSvg={createSvg}
+          changeGradientColorStops={changeGradientColorStops}
         />
         <Canvas
-          bgColor={bgColor}
-          bgImageURL={bgImageURL}
+          background={background}
           canvasRef={canvasRef}
           elements={elements}
           selectShape={setActiveElementId}
@@ -176,13 +177,13 @@ Editor.propTypes = {
   setEditingStatus: func.isRequired,
   setActiveElementId: func.isRequired,
   setPathColors: func.isRequired,
+  changeGradientColorStops: func.isRequired,
   setFilter: func.isRequired,
   undo: func.isRequired,
   redo: func.isRequired,
-  bgColor: string.isRequired,
   activeElId: string,
   elements: array.isRequired,
-  bgImageURL: string,
+  background: object.isRequired,
   activeElement: object,
   isEditing: bool.isRequired,
   pastStatesExist: number.isRequired,
@@ -192,7 +193,6 @@ Editor.propTypes = {
 };
 Editor.defaultProps = {
   activeElId: null,
-  bgImageURL: null,
   activeElement: null,
   activeFilter: '',
 };
@@ -213,10 +213,9 @@ const EditorBox = styled.div`
 `;
 
 const mapStateToProps = (state) => ({
-  bgColor: state.canvas.present.backgroundColor,
+  background: state.canvas.present.background,
   elements: state.canvas.present.elements,
   activeElId: state.editor.activeElementId,
-  bgImageURL: state.canvas.present.bgImageURL,
   activeElement: selectActiveElement(state),
   isEditing: state.editor.isEditing,
   pastStatesExist: state.canvas.past.length,
@@ -237,6 +236,7 @@ const mapDispatchToProps = {
   redo,
   setFilter,
   setPathColors,
+  changeGradientColorStops,
 };
 
 export default connect(

@@ -8,6 +8,7 @@ export const actionTypes = {
   setBgImage: 'EDITOR/SET_BG_IMAGE',
   deleteElement: 'EDITOR/DELETE_ELEMENT',
   setFilter: 'EDITOR/SET_FILTER',
+  changeGradientColorStops: 'EDITOR/CHANGE_BACKGROUND_GRADIENT',
 };
 
 export const setBG = createAction(actionTypes.setBg, (color) => ({ color }));
@@ -16,6 +17,9 @@ export const modifyElement = createAction(actionTypes.modifyElement, (id, newAtt
 export const setBgImage = createAction(actionTypes.setBgImage, (imgURL) => ({ imgURL }));
 export const deleteElement = createAction(actionTypes.deleteElement, (id) => ({ id }));
 export const setFilter = createAction(actionTypes.setFilter, (filter) => ({ filter }));
+export const changeGradientColorStops = createAction(actionTypes.changeGradientColorStops, (colorStops) => ({
+  colorStops,
+}));
 
 export const undo = createAction('CANVAS_UNDO');
 export const redo = createAction('CANVAS_REDO');

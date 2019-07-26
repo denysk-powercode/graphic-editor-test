@@ -18,16 +18,15 @@ const initProps = {
 
 const Canvas = ({
   canvasRef,
-  bgColor,
   elements,
   selectedId,
   selectShape,
   modifyElement,
-  bgImageURL,
   activeElement,
   setEditingStatus,
   isEditing,
   activeFilter,
+  background,
 }) => {
   const textAreaRef = useRef(null);
   const layerRef = useRef(null);
@@ -35,8 +34,8 @@ const Canvas = ({
   const bgImageRef = useRef(null);
   useEffect(() => {
     if (bgRef.current) bgRef.current.cache();
-  }, [bgColor]);
-  const [image] = useImage(bgImageURL, 'Anonymous');
+  }, [background.color, background.gradient]);
+  const [image] = useImage(background.imageURL, 'Anonymous');
   useEffect(() => {
     if (bgImageRef.current) {
       bgImageRef.current.cache();
@@ -69,6 +68,8 @@ const Canvas = ({
     }
   };
   const filters = activeFilter ? [Konva.Filters[`${activeFilter[0].toUpperCase()}${activeFilter.slice(1)}`]] : '';
+  const colorObj = background.type === 'color' ? { fill: background.color } : background.gradient;
+  console.log('colorObj', colorObj);
   return (
     <div style={{ position: 'relative' }}>
       <Stage
@@ -88,10 +89,10 @@ const Canvas = ({
         }}
       >
         <Layer ref={layerRef}>
-          {bgImageURL ? (
+          {background.imageURL ? (
             <Image {...initProps} id="bgImage" ref={bgImageRef} image={image} filters={filters} noise={3} />
           ) : (
-            <Rect {...initProps} fill={bgColor} id="bg" ref={bgRef} filters={filters} noise={3} />
+            <Rect {...initProps} id="bg" ref={bgRef} filters={filters} noise={3} {...colorObj} />
           )}
           {elements.map((el) => {
             return (
@@ -123,21 +124,19 @@ const Canvas = ({
 };
 
 Canvas.propTypes = {
-  bgColor: string.isRequired,
   canvasRef: object.isRequired,
+  background: object.isRequired,
   elements: array.isRequired,
   selectedId: string,
   selectShape: func.isRequired,
   modifyElement: func.isRequired,
   setEditingStatus: func.isRequired,
-  bgImageURL: string,
   activeElement: object,
   activeFilter: string,
   isEditing: bool.isRequired,
 };
 Canvas.defaultProps = {
   selectedId: null,
-  bgImageURL: null,
   activeElement: null,
   activeFilter: '',
 };

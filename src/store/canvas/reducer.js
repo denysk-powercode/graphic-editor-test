@@ -3,8 +3,16 @@ import * as actions from './actions';
 import handleActions from '../immerHandleActions';
 
 const initialState = {
-  backgroundColor: '#FF2E2E',
-  bgImageURL: null,
+  background: {
+    type: 'color',
+    color: '#FF2E2E',
+    imageURL: null,
+    gradient: {
+      fillLinearGradientStartPoint: { x: 0, y: 0 },
+      fillLinearGradientEndPoint: { x: 600, y: 600 },
+      fillLinearGradientColorStops: [0, '#FF2E2E', 1, '#FF2E2E'],
+    },
+  },
   filter: '',
   elements: [
     {
@@ -28,8 +36,16 @@ const initialState = {
 const canvasReducer = handleActions(
   {
     [actions.setBG]: (draft, { payload: { color } }) => {
-      draft.backgroundColor = color;
-      draft.bgImageURL = null;
+      draft.background.color = color;
+      draft.background.type = 'color';
+      draft.background.imageURL = null;
+      draft.background.gradient.fillLinearGradientColorStops = [0, color, 1, color];
+      draft.filter = '';
+    },
+    [actions.changeGradientColorStops]: (draft, { payload: { colorStops } }) => {
+      draft.background.type = 'gradient';
+      draft.background.imageURL = null;
+      draft.background.gradient.fillLinearGradientColorStops = colorStops;
       draft.filter = '';
     },
     [actions.addElement]: (draft, { payload: { elObject } }) => {
@@ -39,7 +55,8 @@ const canvasReducer = handleActions(
       draft.elements = draft.elements.map((item) => (item.id === id ? { ...item, ...newAttrs } : item));
     },
     [actions.setBgImage]: (draft, { payload: { imgURL } }) => {
-      draft.bgImageURL = imgURL;
+      draft.background.imageURL = imgURL;
+      draft.background.type = 'imageURL';
       draft.filter = '';
     },
     [actions.deleteElement]: (draft, { payload: { id } }) => {
