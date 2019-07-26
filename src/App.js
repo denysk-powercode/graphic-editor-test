@@ -4,13 +4,13 @@ import { Switch, Route, Redirect } from 'react-router';
 import Login from 'components/Login';
 import SplashScreen from 'components/common/SplashScreen';
 import PrivateRoute from 'components/common/PrivateRoute';
-import Demo from 'components/Demo';
+import Editor from 'components/Editor';
 
 const Main = () => {
   return (
     <div>
       <Switch>
-        <Route path="/demo" component={Demo} />
+        <Route path="/editor" component={Editor} />
         <Route path="/about" component={() => <div>about</div>} />
         <Route path="/details" component={() => <div>details</div>} />
         <Redirect to="/" />

@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
-const SplashScreen = ({ isLoggedIn }) => (isLoggedIn ? <Redirect to="/demo" /> : <Redirect to="/login" />);
+const SplashScreen = ({ isLoggedIn }) => (isLoggedIn ? <Redirect to="/editor" /> : <Redirect to="/login" />);
 
 SplashScreen.propTypes = {
   isLoggedIn: propTypes.bool.isRequired,

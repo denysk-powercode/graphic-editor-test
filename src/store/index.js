@@ -10,7 +10,7 @@ import rootSaga from './rootSaga';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: [],
+  blacklist: ['editor', 'canvas'],
 };
 
 export const configureStore = ({ initialState = {}, middleware = [] } = {}) => {

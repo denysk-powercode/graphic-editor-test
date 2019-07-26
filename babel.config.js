@@ -1,5 +1,4 @@
 module.exports = {
-  compact: true,
   presets: [
     [
       '@babel/preset-env',
@@ -14,6 +13,7 @@ module.exports = {
     '@babel/preset-flow',
   ],
   plugins: [
+    '@babel/plugin-proposal-optional-chaining',
     'babel-plugin-styled-components',
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-proposal-class-properties',
