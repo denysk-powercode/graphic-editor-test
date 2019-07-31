@@ -2,8 +2,10 @@
   "name": "cra-boilerplate",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://denysk-powercode.github.io/graphic-editor-test/",
   "dependencies": {
     "connected-react-router": "^6.5.2",
+    "gh-pages": "^2.0.1",
     "i18next": "^17.0.6",
     "konva": "^3.4.1",
     "lint-staged": "^9.2.0",
@@ -32,7 +34,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
