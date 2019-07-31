@@ -2,13 +2,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import { func, bool, object, string, array } from 'prop-types';
 import styled from 'styled-components';
 import Konva from 'konva';
+import { isMobile } from 'react-device-detect';
 import { Layer, Stage, Rect, Image } from 'react-konva';
 import useImage from '../useImage';
 
 import SingleElement from './Element';
 
-const canvasWidth = Number(process.env.REACT_APP_CANVAS_WIDTH);
-const canvasHeight = Number(process.env.REACT_APP_CANVAS_HEIGHT);
+const canvasWidth = Number(isMobile ? process.env.REACT_APP_MOBILE_CANVAS_WIDTH : process.env.REACT_APP_CANVAS_WIDTH);
+const canvasHeight = Number(
+  isMobile ? process.env.REACT_APP_MOBILE_CANVAS_HEIGHT : process.env.REACT_APP_CANVAS_HEIGHT
+);
 const initProps = {
   x: 0,
   y: 0,
@@ -67,6 +70,16 @@ const Canvas = ({
       });
     }
   };
+  const onMouseDown = (e) => {
+    // deselect when clicked on empty area
+    const clickedOnEmpty = (e.target.attrs.id && e.target.attrs.id.includes('bg')) || e.target === e.target.getStage();
+    if (clickedOnEmpty && selectedId) {
+      selectShape(null);
+    }
+    if (clickedOnEmpty && isEditing) {
+      setEditingStatus(false);
+    }
+  };
   const filters = activeFilter ? [Konva.Filters[`${activeFilter[0].toUpperCase()}${activeFilter.slice(1)}`]] : '';
   const colorObj = background.type === 'color' ? { fill: background.color } : background.gradient;
   return (
@@ -75,17 +88,8 @@ const Canvas = ({
         ref={canvasRef}
         width={canvasWidth}
         height={canvasHeight}
-        onMouseDown={(e) => {
-          // deselect when clicked on empty area
-          const clickedOnEmpty =
-            (e.target.attrs.id && e.target.attrs.id.includes('bg')) || e.target === e.target.getStage();
-          if (clickedOnEmpty && selectedId) {
-            selectShape(null);
-          }
-          if (clickedOnEmpty && isEditing) {
-            setEditingStatus(false);
-          }
-        }}
+        onMouseDown={onMouseDown}
+        onTouchStart={onMouseDown}
       >
         <Layer ref={layerRef}>
           {background.imageURL ? (

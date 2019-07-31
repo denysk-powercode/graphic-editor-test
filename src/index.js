@@ -7,8 +7,9 @@ import ErrorBoundary from 'components/common/ErrorBoundary';
 import { configureStore } from 'store';
 import App from 'App';
 import IntlProvider from 'i18n/IntlProvider';
-
 import createHistory from 'store/history';
+
+import Theme from './theme';
 
 const browserHistory = createHistory();
 
@@ -22,7 +23,9 @@ render(
       <Router history={browserHistory}>
         <IntlProvider>
           <ErrorBoundary>
-            <App />
+            <Theme>
+              <App />
+            </Theme>
           </ErrorBoundary>
         </IntlProvider>
       </Router>

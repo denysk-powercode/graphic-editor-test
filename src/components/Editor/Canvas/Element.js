@@ -1,10 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { func, bool, string } from 'prop-types';
+import { isMobile } from 'react-device-detect';
 import { Text, Rect, Transformer, Image } from 'react-konva';
 import useImage from '../useImage';
 
-const canvasWidth = process.env.REACT_APP_CANVAS_WIDTH;
-const canvasHeight = process.env.REACT_APP_CANVAS_HEIGHT;
+const canvasWidth = isMobile ? process.env.REACT_APP_MOBILE_CANVAS_WIDTH : process.env.REACT_APP_CANVAS_WIDTH;
+const canvasHeight = isMobile ? process.env.REACT_APP_MOBILE_CANVAS_HEIGHT : process.env.REACT_APP_CANVAS_HEIGHT;
 
 const typesMap = {
   text: Text,
@@ -72,6 +73,7 @@ const SingleElement = ({
         <Shape
           draggable
           onClick={() => !isSelected && onSelect(id)}
+          onTouchStart={() => !isSelected && onSelect(id)}
           ref={currentShapeRef}
           onDragEnd={onDragEnd}
           onTransformEnd={onTransformEnd}

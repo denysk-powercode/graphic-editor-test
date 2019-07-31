@@ -2,6 +2,7 @@ import React, { useRef, useCallback, useEffect } from 'react';
 import { func, bool, object, number, string, array } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { isMobile } from 'react-device-detect';
 import Canvas from './Canvas';
 import CropCanvas from './Canvas/CropCanvas';
 import Tools from './Tools';
@@ -25,6 +26,9 @@ import {
 import { setPathColors } from '../../store/editor/actions';
 
 import { selectActiveElement } from '../../store/editor/selectors';
+
+const canvasWidth = isMobile ? process.env.REACT_APP_MOBILE_CANVAS_WIDTH : process.env.REACT_APP_CANVAS_WIDTH;
+const canvasHeight = isMobile ? process.env.REACT_APP_MOBILE_CANVAS_HEIGHT : process.env.REACT_APP_CANVAS_HEIGHT;
 
 const Editor = ({
   setBG,
@@ -85,8 +89,8 @@ const Editor = ({
       id: String(Math.random()),
       type: 'text',
       text: `Numba # ${Math.floor(Math.random() * 100)}`,
-      x: process.env.REACT_APP_CANVAS_HEIGHT / 2 - 40,
-      y: process.env.REACT_APP_CANVAS_HEIGHT / 2 - 10,
+      x: canvasWidth / 2 - 40,
+      y: canvasHeight / 2 - 10,
       rotation: 0,
       fill: '#fff',
       fontSize: 30,
@@ -99,8 +103,8 @@ const Editor = ({
       type: 'rect',
       width: 100,
       height: 100,
-      x: process.env.REACT_APP_CANVAS_WIDTH / 2 - 50,
-      y: process.env.REACT_APP_CANVAS_HEIGHT / 2 - 50,
+      x: canvasWidth / 2 - 50,
+      y: canvasHeight / 2 - 50,
       rotation: 0,
       stroke: '#000',
       strokeWidth: 2,
@@ -112,8 +116,8 @@ const Editor = ({
       id: String(Math.random()),
       type: 'svg',
       url: 'https://image.flaticon.com/icons/svg/1279/1279553.svg',
-      x: process.env.REACT_APP_CANVAS_WIDTH / 2 - 100,
-      y: process.env.REACT_APP_CANVAS_HEIGHT / 2 - 100,
+      x: canvasWidth / 2 - 100,
+      y: canvasHeight / 2 - 100,
       width: 200,
       height: 200,
     });
@@ -127,8 +131,8 @@ const Editor = ({
       originalHeight: 281,
       x: 0,
       y: 0,
-      width: process.env.REACT_APP_CANVAS_WIDTH,
-      height: process.env.REACT_APP_CANVAS_HEIGHT / 2,
+      width: canvasWidth,
+      height: canvasHeight / 2,
     });
   });
   const deleteEl = useCallback(() => {
@@ -230,6 +234,9 @@ const Container = styled.div`
 `;
 
 const EditorBox = styled.div`
+  ${({ theme }) => theme.mobile`
+     width: 100%;
+  `};
   display: flex;
   flex-wrap: wrap;
   width: 45%;

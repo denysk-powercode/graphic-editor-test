@@ -54,9 +54,9 @@ const Tools = ({
     <ToolsColumn>
       <InvisibleInput type="file" ref={fileInput} onChange={onInputChange} />
       {isPickerVisible && <StyledSketchPicker color={background.color} onChangeComplete={onPick} />}
-      <button type="button" onClick={() => setPickerVisibility(!isPickerVisible)}>
+      <Btn type="button" onClick={() => setPickerVisibility(!isPickerVisible)}>
         Background color
-      </button>
+      </Btn>
       <GradientWrapper>
         {isGradientPickerVisible && (
           <StyledSketchPicker
@@ -64,30 +64,32 @@ const Tools = ({
             onChangeComplete={onGradientColorPickComplete}
           />
         )}
-        <GradientPicker
-          clr={background.gradient.fillLinearGradientColorStops[1]}
-          onClick={() => onGradientPickerClick(1)}
-        />
-        <GradientPicker
-          clr={background.gradient.fillLinearGradientColorStops[3]}
-          onClick={() => onGradientPickerClick(3)}
-        />
+        <div style={{ display: 'flex', marginBottom: '10px' }}>
+          <GradientPicker
+            clr={background.gradient.fillLinearGradientColorStops[1]}
+            onClick={() => onGradientPickerClick(1)}
+          />
+          <GradientPicker
+            clr={background.gradient.fillLinearGradientColorStops[3]}
+            onClick={() => onGradientPickerClick(3)}
+          />
+        </div>
       </GradientWrapper>
-      <button type="button" onClick={addText}>
+      <Btn type="button" onClick={addText}>
         Text
-      </button>
-      <button type="button" onClick={addRect}>
+      </Btn>
+      <Btn type="button" onClick={addRect}>
         Add rectangle
-      </button>
-      <button type="button" onClick={download}>
+      </Btn>
+      <Btn type="button" onClick={download}>
         Download image
-      </button>
-      <button type="button" onClick={addSvg}>
+      </Btn>
+      <Btn type="button" onClick={addSvg}>
         Add svg
-      </button>
-      <button type="button" onClick={addImage}>
+      </Btn>
+      <Btn type="button" onClick={addImage}>
         Add image
-      </button>
+      </Btn>
       <select
         name="filters"
         id="filters"
@@ -104,9 +106,9 @@ const Tools = ({
         <option value="grayscale">Grayscale</option>
         <option value="noise">Noise</option>
       </select>
-      <button type="button" onClick={exportImg}>
+      <Btn type="button" onClick={exportImg}>
         Generate png
-      </button>
+      </Btn>
     </ToolsColumn>
   );
 };
@@ -131,15 +133,34 @@ Tools.defaultProps = {
 const ToolsColumn = styled.div`
   display: flex;
   position: relative;
+  ${({ theme }) => theme.mobile`
+     flex-direction: row;
+     height: auto;
+     flex-wrap: wrap;
+     width: 90vw;
+     margin-bottom: 30px;
+  `};
   flex-direction: column;
   height: 100%;
   width: 10%;
   justify-content: space-between;
 `;
 
+const Btn = styled.button`
+  ${({ theme }) => theme.mobile`
+  margin-bottom: 10px;
+  margin-right: 10px;
+  `};
+  margin: 0;
+`;
+
 const StyledSketchPicker = styled(SketchPicker)`
   position: absolute;
   z-index: 2;
+  ${({ theme }) => theme.mobile`
+      left: 0%;
+      top: 45%;
+  `};
   top: 12%;
   left: 90%;
 `;
@@ -157,6 +178,7 @@ const GradientWrapper = styled.div`
 const GradientPicker = styled.div`
   position: relative;
   width: 25px;
+  margin-right: 15px;
   height: 25px;
   border: 1px solid black;
   background-color: ${(props) => props.clr};

@@ -2,14 +2,16 @@ import React, { useRef, useState, useEffect } from 'react';
 import { object } from 'prop-types';
 import { Layer, Stage, Rect, Image, Transformer } from 'react-konva';
 import { throttle } from 'lodash';
+import { isMobile } from 'react-device-detect';
 
 // TODO big chunk of this code is being repeated over and over across multiple components, find a way to optimize
 
 import useImage from '../useImage';
 
-const canvasWidth = process.env.REACT_APP_CANVAS_WIDTH;
-const canvasHeight = process.env.REACT_APP_CANVAS_HEIGHT;
+console.log('isMobile', isMobile);
 
+const canvasWidth = isMobile ? process.env.REACT_APP_MOBILE_CANVAS_WIDTH : process.env.REACT_APP_CANVAS_WIDTH;
+const canvasHeight = isMobile ? process.env.REACT_APP_MOBILE_CANVAS_HEIGHT : process.env.REACT_APP_CANVAS_HEIGHT;
 const initialSelectionRect = {
   x: 0,
   y: 0,

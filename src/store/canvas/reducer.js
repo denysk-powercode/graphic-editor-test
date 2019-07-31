@@ -1,7 +1,11 @@
 /* eslint-disable no-param-reassign,no-unused-vars */
+import { isMobile } from 'react-device-detect';
+
 import * as actions from './actions';
 import handleActions from '../immerHandleActions';
 
+const canvasWidth = isMobile ? process.env.REACT_APP_MOBILE_CANVAS_WIDTH : process.env.REACT_APP_CANVAS_WIDTH;
+const canvasHeight = isMobile ? process.env.REACT_APP_MOBILE_CANVAS_HEIGHT : process.env.REACT_APP_CANVAS_HEIGHT;
 const initialState = {
   background: {
     type: 'color',
@@ -9,7 +13,7 @@ const initialState = {
     imageURL: null,
     gradient: {
       fillLinearGradientStartPoint: { x: 0, y: 0 },
-      fillLinearGradientEndPoint: { x: 600, y: 600 },
+      fillLinearGradientEndPoint: { x: canvasWidth, y: canvasHeight },
       fillLinearGradientColorStops: [0, '#FF2E2E', 1, '#FF2E2E'],
     },
   },
