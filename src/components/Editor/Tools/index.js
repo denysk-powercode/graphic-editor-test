@@ -14,6 +14,7 @@ const Tools = ({
   activeFilter,
   changeGradientColorStops,
   addImage,
+  exportImg,
 }) => {
   const [isPickerVisible, setPickerVisibility] = useState(false);
   const [isGradientPickerVisible, setGradientPickerVisibility] = useState(false);
@@ -103,6 +104,9 @@ const Tools = ({
         <option value="grayscale">Grayscale</option>
         <option value="noise">Noise</option>
       </select>
+      <button type="button" onClick={exportImg}>
+        Generate png
+      </button>
     </ToolsColumn>
   );
 };
@@ -115,6 +119,7 @@ Tools.propTypes = {
   setFilter: func.isRequired,
   addSvg: func.isRequired,
   addImage: func.isRequired,
+  exportImg: func.isRequired,
   changeGradientColorStops: func.isRequired,
   background: object.isRequired,
   activeFilter: string,
@@ -129,7 +134,7 @@ const ToolsColumn = styled.div`
   flex-direction: column;
   height: 100%;
   width: 10%;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 const StyledSketchPicker = styled(SketchPicker)`

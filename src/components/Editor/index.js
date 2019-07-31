@@ -167,6 +167,7 @@ const Editor = ({
           addSvg={createSvg}
           addImage={createImage}
           changeGradientColorStops={changeGradientColorStops}
+          exportImg={exportImg}
         />
         {!isCropping ? (
           <Canvas
@@ -185,9 +186,6 @@ const Editor = ({
           <CropCanvas secondCanvasRef={secondCanvasRef} activeElement={activeElement} />
         )}
       </EditorBox>
-      <button type="button" style={{ marginBottom: '100px', zIndex: 111 }} onClick={exportImg}>
-        Generate png
-      </button>
     </Container>
   );
 };
@@ -228,14 +226,14 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 95vh;
 `;
 
 const EditorBox = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 55%;
-  justify-content: space-between;
+  width: 45%;
+  justify-content: space-around;
 `;
 
 const mapStateToProps = (state) => ({
