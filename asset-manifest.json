@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/denysk-powercode/graphic-editor-test/static/js/main.1a958c7e.chunk.js",
-    "main.js.map": "/denysk-powercode/graphic-editor-test/static/js/main.1a958c7e.chunk.js.map",
-    "runtime~main.js": "/denysk-powercode/graphic-editor-test/static/js/runtime~main.b1df2634.js",
-    "runtime~main.js.map": "/denysk-powercode/graphic-editor-test/static/js/runtime~main.b1df2634.js.map",
-    "static/js/2.186ddc0f.chunk.js": "/denysk-powercode/graphic-editor-test/static/js/2.186ddc0f.chunk.js",
-    "static/js/2.186ddc0f.chunk.js.map": "/denysk-powercode/graphic-editor-test/static/js/2.186ddc0f.chunk.js.map",
-    "index.html": "/denysk-powercode/graphic-editor-test/index.html",
-    "precache-manifest.cbf348de936fc07d33bec0908b698dd1.js": "/denysk-powercode/graphic-editor-test/precache-manifest.cbf348de936fc07d33bec0908b698dd1.js",
-    "service-worker.js": "/denysk-powercode/graphic-editor-test/service-worker.js"
+    "main.js": "/graphic-editor-test/static/js/main.1a958c7e.chunk.js",
+    "main.js.map": "/graphic-editor-test/static/js/main.1a958c7e.chunk.js.map",
+    "runtime~main.js": "/graphic-editor-test/static/js/runtime~main.4fd9d440.js",
+    "runtime~main.js.map": "/graphic-editor-test/static/js/runtime~main.4fd9d440.js.map",
+    "static/js/2.3eeee8f9.chunk.js": "/graphic-editor-test/static/js/2.3eeee8f9.chunk.js",
+    "static/js/2.3eeee8f9.chunk.js.map": "/graphic-editor-test/static/js/2.3eeee8f9.chunk.js.map",
+    "index.html": "/graphic-editor-test/index.html",
+    "precache-manifest.359c186606137a80387d51c3c5845821.js": "/graphic-editor-test/precache-manifest.359c186606137a80387d51c3c5845821.js",
+    "service-worker.js": "/graphic-editor-test/service-worker.js"
   }
 }
