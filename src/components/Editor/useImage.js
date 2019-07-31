@@ -8,7 +8,11 @@ export default function useImage(url, crossOrigin) {
     if (!url) return;
     const img = new window.Image();
     img.src = url;
-    img.onload = () => setState({ image: img, status: 'loaded' });
+    img.onload = () => {
+      console.log('img.heihght', img.height);
+      console.log('img.width', img.width);
+      setState({ image: img, status: 'loaded' });
+    };
     if (crossOrigin) img.crossOrigin = crossOrigin;
 
     return () => setState(defaultState);

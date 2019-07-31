@@ -6,3 +6,6 @@ export const setEditingStatus = createAction('EDITOR/SET_EDITING_STATUS', (statu
 
 export const setPathColors = createAction('EDITOR/SET_PATH_COLORS', (colors) => ({ colors }));
 export const modifyPathColor = createAction('EDITOR/MODIFY_PATH_COLOR', (i, color) => ({ i, color }));
+export const startCrop = createAction('EDITOR/START_CROP');
+export const startSelection = createAction('EDITOR/START_SELECTION');
+export const endSelection = createAction('EDITOR/END_SELECTION');

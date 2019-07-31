@@ -6,6 +6,8 @@ import * as canvasActions from '../canvas/actions';
 const initialState = {
   activeElementId: null,
   isEditing: false,
+  isCropping: false,
+  isSelectionActive: false,
   pathColors: [],
 };
 
@@ -27,6 +29,15 @@ const editorReducer = handleActions(
     },
     [actions.setPathColors]: (draft, { payload: { colors } }) => {
       draft.pathColors = colors;
+    },
+    [actions.startCrop]: (draft) => {
+      draft.isCropping = true;
+    },
+    [actions.startSelection]: (draft) => {
+      draft.isSelectionActive = true;
+    },
+    [actions.endSelection]: (draft) => {
+      draft.isSelectionActive = false;
     },
     [actions.modifyPathColor]: (draft, { payload: { i, color } }) => {
       draft.pathColors[i] = color;

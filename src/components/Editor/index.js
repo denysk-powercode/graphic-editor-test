@@ -3,12 +3,14 @@ import { func, bool, object, number, string, array } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Canvas from './Canvas';
+import CropCanvas from './Canvas/CropCanvas';
 import Tools from './Tools';
 import Controls from './Controls';
 import SVGColorsPicker from './SVGColorsPicker';
 import TextTools from './TextTools';
+import ImageTools from './ImageTools';
 
-import { setActiveElementId, setEditingStatus } from '../../store/editor/actions';
+import { setActiveElementId, setEditingStatus, startCrop } from '../../store/editor/actions';
 import {
   setBG,
   addElement,
@@ -46,10 +48,12 @@ const Editor = ({
   pathColors,
   background,
   changeGradientColorStops,
+  isCropping,
+  startCrop,
 }) => {
   useEffect(() => {
     (async () => {
-      if (activeElement && activeElement.type === 'image') {
+      if (activeElement && activeElement.type === 'svg') {
         const resp = await fetch(activeElement.url);
         const text = await resp.text();
         const parser = new DOMParser();
@@ -60,7 +64,7 @@ const Editor = ({
           colors.push(paths[i].getAttribute('fill'));
         }
         setPathColors(colors.filter((item) => Boolean(item)));
-      } else if (pathColors.length && (!activeElement || (activeElement && activeElement.type !== 'image'))) {
+      } else if (pathColors.length && (!activeElement || (activeElement && activeElement.type !== 'svg'))) {
         setPathColors([]);
       }
     })();
@@ -75,6 +79,7 @@ const Editor = ({
     return () => document.removeEventListener('keydown', onKeyPress);
   }, [activeElId, isEditing]);
   const canvasRef = useRef(null);
+  const secondCanvasRef = useRef(null);
   const createTextEl = useCallback(() => {
     addElement({
       id: String(Math.random()),
@@ -105,12 +110,25 @@ const Editor = ({
   const createSvg = useCallback(async () => {
     addElement({
       id: String(Math.random()),
-      type: 'image',
+      type: 'svg',
       url: 'https://image.flaticon.com/icons/svg/1279/1279553.svg',
       x: process.env.REACT_APP_CANVAS_WIDTH / 2 - 100,
       y: process.env.REACT_APP_CANVAS_HEIGHT / 2 - 100,
       width: 200,
       height: 200,
+    });
+  });
+  const createImage = useCallback(() => {
+    addElement({
+      id: String(Math.random()),
+      type: 'image',
+      url: 'https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+      originalWidth: 500,
+      originalHeight: 281,
+      x: 0,
+      y: 0,
+      width: process.env.REACT_APP_CANVAS_WIDTH,
+      height: process.env.REACT_APP_CANVAS_HEIGHT / 2,
     });
   });
   const deleteEl = useCallback(() => {
@@ -127,8 +145,9 @@ const Editor = ({
   return (
     <Container>
       <EditorBox>
-        {activeElement && activeElement.type === 'image' && <SVGColorsPicker />}
+        {activeElement && activeElement.type === 'svg' && <SVGColorsPicker />}
         {activeElement && activeElement.type === 'text' && <TextTools />}
+        {activeElement && activeElement.type === 'image' && !isCropping && <ImageTools onCropBtnClick={startCrop} />}
         <Controls
           deleteElement={deleteEl}
           activeElement={activeElement}
@@ -146,20 +165,25 @@ const Editor = ({
           setFilter={setFilter}
           activeFilter={activeFilter}
           addSvg={createSvg}
+          addImage={createImage}
           changeGradientColorStops={changeGradientColorStops}
         />
-        <Canvas
-          background={background}
-          canvasRef={canvasRef}
-          elements={elements}
-          selectShape={setActiveElementId}
-          selectedId={activeElId}
-          modifyElement={modifyElement}
-          activeElement={activeElement}
-          setEditingStatus={setEditingStatus}
-          isEditing={isEditing}
-          activeFilter={activeFilter}
-        />
+        {!isCropping ? (
+          <Canvas
+            background={background}
+            canvasRef={canvasRef}
+            elements={elements}
+            selectShape={setActiveElementId}
+            selectedId={activeElId}
+            modifyElement={modifyElement}
+            activeElement={activeElement}
+            setEditingStatus={setEditingStatus}
+            isEditing={isEditing}
+            activeFilter={activeFilter}
+          />
+        ) : (
+          <CropCanvas secondCanvasRef={secondCanvasRef} activeElement={activeElement} />
+        )}
       </EditorBox>
       <button type="button" style={{ marginBottom: '100px', zIndex: 111 }} onClick={exportImg}>
         Generate png
@@ -179,6 +203,7 @@ Editor.propTypes = {
   setPathColors: func.isRequired,
   changeGradientColorStops: func.isRequired,
   setFilter: func.isRequired,
+  startCrop: func.isRequired,
   undo: func.isRequired,
   redo: func.isRequired,
   activeElId: string,
@@ -190,6 +215,7 @@ Editor.propTypes = {
   futureStatesExist: number.isRequired,
   activeFilter: string,
   pathColors: array.isRequired,
+  isCropping: bool.isRequired,
 };
 Editor.defaultProps = {
   activeElId: null,
@@ -222,6 +248,7 @@ const mapStateToProps = (state) => ({
   futureStatesExist: state.canvas.future.length,
   activeFilter: state.canvas.present.filter,
   pathColors: state.editor.pathColors,
+  isCropping: state.editor.isCropping,
 });
 
 const mapDispatchToProps = {
@@ -237,6 +264,7 @@ const mapDispatchToProps = {
   setFilter,
   setPathColors,
   changeGradientColorStops,
+  startCrop,
 };
 
 export default connect(

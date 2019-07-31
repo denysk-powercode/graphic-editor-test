@@ -9,6 +9,7 @@ const canvasHeight = process.env.REACT_APP_CANVAS_HEIGHT;
 const typesMap = {
   text: Text,
   rect: Rect,
+  svg: Image,
   image: Image,
 };
 

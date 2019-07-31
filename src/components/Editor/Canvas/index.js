@@ -69,7 +69,6 @@ const Canvas = ({
   };
   const filters = activeFilter ? [Konva.Filters[`${activeFilter[0].toUpperCase()}${activeFilter.slice(1)}`]] : '';
   const colorObj = background.type === 'color' ? { fill: background.color } : background.gradient;
-  console.log('colorObj', colorObj);
   return (
     <div style={{ position: 'relative' }}>
       <Stage

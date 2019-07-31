@@ -13,7 +13,7 @@ const SVGColorsPicker = ({ pathColors, modifyPathColor, modifyElement, activeEle
   const [color, setCurrentColor] = useState('#fff');
   const [index, setCurrentIndex] = useState(null);
   const parseSVG = async (index, color) => {
-    if (activeElement && activeElement.type === 'image') {
+    if (activeElement && activeElement.type === 'svg') {
       const resp = await fetch(activeElement.url);
       const text = await resp.text();
       const parser = new DOMParser();

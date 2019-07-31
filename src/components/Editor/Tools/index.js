@@ -13,6 +13,7 @@ const Tools = ({
   setFilter,
   activeFilter,
   changeGradientColorStops,
+  addImage,
 }) => {
   const [isPickerVisible, setPickerVisibility] = useState(false);
   const [isGradientPickerVisible, setGradientPickerVisibility] = useState(false);
@@ -83,6 +84,9 @@ const Tools = ({
       <button type="button" onClick={addSvg}>
         Add svg
       </button>
+      <button type="button" onClick={addImage}>
+        Add image
+      </button>
       <select
         name="filters"
         id="filters"
@@ -110,6 +114,7 @@ Tools.propTypes = {
   setBgImage: func.isRequired,
   setFilter: func.isRequired,
   addSvg: func.isRequired,
+  addImage: func.isRequired,
   changeGradientColorStops: func.isRequired,
   background: object.isRequired,
   activeFilter: string,
