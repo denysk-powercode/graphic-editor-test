@@ -230,6 +230,9 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  ${({ theme }) => theme.mobile`
+     height: auto;
+  `};
   height: 95vh;
 `;
 
