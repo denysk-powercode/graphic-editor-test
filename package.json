@@ -9,7 +9,7 @@
     "i18next": "^17.0.6",
     "konva": "^3.4.1",
     "lint-staged": "^9.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "micromatch": "^4.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
